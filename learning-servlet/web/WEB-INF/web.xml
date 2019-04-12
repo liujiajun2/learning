@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+    <!--icon图片-->
+    <icon></icon>
+    <!--display-name元素提供GUI工具可能会用来标记这个特定的Web应用的一个名称-->
+    <display-name>MyServlet</display-name>
+    <!--description元素给出与此有关的说明性文本。-->
+    <description>我的Servlet</description>
+    <!--context-param元素声明应用范围内的初始化参数-->
+    <context-param>
+        <param-name>encoding</param-name>
+        <param-value>UTF-8</param-value>
+    </context-param>
+
+
+
+    <servlet>
+        <servlet-name>hello</servlet-name>
+        <servlet-class>xin.liujiajun.servlet.servlet.Hello</servlet-class>
+
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>hello</servlet-name>
+        <url-pattern>/servlet/hello</url-pattern>
+    </servlet-mapping>
+
+</web-app>
