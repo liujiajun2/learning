@@ -16,6 +16,7 @@
         <module>learning-socket</module>
         <module>learning-netty</module>
         <module>learning-springboot</module>
+        <module>learning-mybatis</module>
     </modules>
     <packaging>pom</packaging>
     <!--阿里远程仓库-->

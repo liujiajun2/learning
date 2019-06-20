@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xin.liujiajun.mybatis.mapper.PersonMapper">
+    <select id="queryById" resultType="person">
+        select * from person where id = #{id}
+    </select>
+    <insert id="add" parameterType="person" useGeneratedKeys="true" keyProperty="id">
+        insert into person(name,sex,interest,create_time)
+        values (#{name},#{sex},#{interest},#{createTime})
+    </insert>
+</mapper>
