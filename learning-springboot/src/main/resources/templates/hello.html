@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>
+    hello
+</p>
+<div>
+    <input id="msg" type="text" />
+    <button id = "btn" type="button" > 提交</button>
+    <div id="append">
+
+    </div>
+</div>
+</body>
+<script>
+    var socket;
+    if (typeof (WebSocket) == 'undefined') {
+        console.log("浏览器不支持WebSocket");
+    }
+    socket = new WebSocket("ws://localhost:8080/websocket/20");
+    socket.onopen = function (evt) {
+        console.log(evt);
+        console.log("socket 打开");
+        socket.send("客户端消息");
+    };
+    socket.onmessage = function (msg) {
+        console.log(msg.data);
+    };
+    document.getElementById("btn").onclick = function (ev) {
+        var msg = document.getElementById("msg").value;
+        if (msg === ''){
+            alert("信息为空");
+        }
+        socket.send(msg);
+    }
+
+</script>
+</html>

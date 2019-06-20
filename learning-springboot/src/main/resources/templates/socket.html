@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="js/sockjs.js"></script>
+<script src="js/stomp.min.js"></script>
+<script>
+
+    var socket;
+    //WebSocket url ws://localhost:8080/websocket/20
+    // socket = new SockJS("http://localhost:8080/websocket/20");
+    socket = new SockJS("http://localhost:8080/endpointWisely");
+    var stomp = Stomp.over(socket);
+    stomp.connect({},function (frame) {
+       // console.log("connected：" + frame);
+       stomp.send("/welcome",{},JSON.stringify({"name":"zhangsna"}))
+       stomp.subscribe("topic/getResponse",function (response) {
+           // console.log("response：" + response);
+       })
+    });
+</script>
+</html>

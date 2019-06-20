@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+<p>
+    hello
+</p>
+<div>
+    <input th:value="${uid}" type="hidden" id="uid">
+    <input id="msg" type="text" />
+    <button id = "btn" type="button" > 提交</button>
+    <div id="append">
+
+    </div>
+</div>
+</body>
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="js/sockjs.js"></script>
+<script src="js/stomp.min.js"></script>
+<script>
+    var uid = $('#uid').val();
+    var socket;
+    //WebSocket url ws://localhost:8080/websocket/20
+    // socket = new SockJS("http://localhost:8080/websocket/20");
+    socket = new WebSocket("ws://localhost:8080/websocket/" + uid);
+    socket.onopen = function (evt) {
+        console.log(evt);
+        console.log("socket 打开");
+        socket.send("客户端消息");
+    };
+    socket.onmessage = function (msg) {
+        console.log(msg.data);
+    };
+    document.getElementById("btn").onclick = function (ev) {
+        var msg = $("#msg").val();
+        if (msg === ''){
+            alert("信息为空");
+        }
+        socket.send(msg);
+    }
+
+</script>
+</html>

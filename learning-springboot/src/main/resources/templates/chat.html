@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+</head>
+<body>
+    <p>聊天室</p>
+    <form id="form">
+        <textarea rows="4" cols="60" name="text"></textarea>
+        <input type="submit">
+    </form>
+    <button id="stop">关闭</button>
+    <div id="output"></div>
+</body>
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="js/sockjs.js"></script>
+<script src="js/stomp.min.js"></script>
+<script>
+    $("#form").submit(function (e) {
+        e.preventDefault();
+        var text = $("#form").find('textarea[name="text"]').val();
+        console.log(text);
+        send(text);
+    });
+
+    var socket = new SockJS("http://localhost:8080/endpointChat");
+    var stomp = Stomp.over(socket);
+    stomp.connect({},function (frame) {
+        stomp.subscribe("/user/queue/notifications",function (response) {
+            $("#output").append("<b>Received:" + response.body + "</b><br>")
+        });
+    });
+    function send(text) {
+        stomp.send("/chat",{},text);
+    }
+    $("#stop").click(function () {
+       socket.close();
+    });
+</script>
+</html>

@@ -15,6 +15,7 @@
         <module>learning-servlet</module>
         <module>learning-socket</module>
         <module>learning-netty</module>
+        <module>learning-springboot</module>
     </modules>
     <packaging>pom</packaging>
     <!--阿里远程仓库-->
@@ -31,6 +32,15 @@
             </snapshots>
         </repository>
     </repositories>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.10</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <build>
         <plugins>
             <plugin>
