@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  xin.liujiajun.springboot.autoconfig.config.Config
