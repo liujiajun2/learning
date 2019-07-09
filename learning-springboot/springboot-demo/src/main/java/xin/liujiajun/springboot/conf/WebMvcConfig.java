@@ -1,8 +1,10 @@
 package xin.liujiajun.springboot.conf;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import xin.liujiajun.springboot.interceptor.MyInterceptor;
 
 /**
  * @author LiuJiaJun
@@ -16,5 +18,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addViewController("/ws").setViewName("/socket");
         registry.addViewController("/login").setViewName("/login");
         registry.addViewController("/chat").setViewName("/chat");
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new MyInterceptor());
     }
 }

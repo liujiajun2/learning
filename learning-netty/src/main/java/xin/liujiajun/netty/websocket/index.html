@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+</head>
+<body>
+    <form onsubmit="return false">
+        <input type="text" name="message" value="Netty" />
+        <input type="button" value="提交" onclick="send(this.form.message.value)">
+
+        <hr color="blue"/>
+        <h3>应答消息</h3>
+        <textarea id="responseText" style="width: 500px;height: 300px;"></textarea>
+    </form>
+</body>
+<script>
+    var socket;
+    if (!window.WebSocket){
+        console.log("不支持WebSocket");
+    }
+    if (window.WebSocket) {
+        socket = new WebSocket("ws://localhost:8080/websocket");
+        socket.onmessage = function (event) {
+            var ta = document.getElementById("responseText");
+            ta.value = "";
+            ta.value = event.data;
+        };
+        socket.onopen = function (event) {
+            var ta = document.getElementById("responseText");
+            ta.value = "打开服务端征程";
+        }
+        socket.onclose = function (event) {
+            var ta = document.getElementById("responseText");
+            ta.value = "websocket 关闭";
+        }
+    }
+    function send(message) {
+        if (!window.WebSocket){
+            return;
+        }
+        if (socket.readyState == WebSocket.OPEN) {
+            socket.send(message);
+        } else{
+            console.log("连接没有成功");
+        }
+    }
+
+</script>
+</html>
