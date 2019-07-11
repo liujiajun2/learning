@@ -23,6 +23,7 @@ import javax.annotation.PostConstruct;
         "xin.liujiajun.springboot.handler",
         "xin.liujiajun.springboot.model",
         "xin.liujiajun.springboot.service",
+        "xin.liujiajun.springboot.event",
 })
 public class BootApplication {
 

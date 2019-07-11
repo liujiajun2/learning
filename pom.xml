@@ -17,6 +17,10 @@
         <module>learning-netty</module>
         <module>learning-springboot</module>
         <module>learning-mybatis</module>
+        <module>learning-guava</module>
+        <module>learning-jodd</module>
+        <module>learning-pattern</module>
+        <module>learning-quartz</module>
     </modules>
     <packaging>pom</packaging>
     <!--阿里远程仓库-->
