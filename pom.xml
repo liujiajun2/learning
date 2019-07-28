@@ -23,6 +23,7 @@
         <module>learning-quartz</module>
         <module>learning-mq</module>
         <module>learning-sentinel</module>
+        <module>learning-es</module>
     </modules>
     <packaging>pom</packaging>
     <!--阿里远程仓库-->

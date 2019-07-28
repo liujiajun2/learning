@@ -8,6 +8,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.CharsetUtil;
 
 import java.io.InputStream;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author LiuJiaJun
@@ -16,9 +17,12 @@ import java.io.InputStream;
 @ChannelHandler.Sharable
 public class EchoClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
+    private ChannelHandlerContext context;
+
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        ctx.writeAndFlush(Unpooled.copiedBuffer("Hello World", CharsetUtil.UTF_8));
+        this.context = ctx;
+        start();
     }
 
     @Override
@@ -30,5 +34,13 @@ public class EchoClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         cause.printStackTrace();
         ctx.close();
+    }
+
+    public void start(){
+        new Thread(()->{
+            while (true) {
+                this.context.writeAndFlush(Unpooled.copiedBuffer("Hello World", CharsetUtil.UTF_8));
+            }
+        }).start();
     }
 }

@@ -44,7 +44,7 @@ public class EchoClient {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        new EchoClient("127.0.0.1",9988).start();
+        new EchoClient("127.0.0.1",8099).start();
     }
 
 }

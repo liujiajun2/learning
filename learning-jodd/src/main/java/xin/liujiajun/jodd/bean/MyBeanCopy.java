@@ -1,6 +1,7 @@
 package xin.liujiajun.jodd.bean;
 
 import jodd.bean.BeanCopy;
+import jodd.bean.BeanUtil;
 
 import java.time.Instant;
 
@@ -22,6 +23,13 @@ public class MyBeanCopy {
     }
 
     public static void main(String[] args) {
-        test();
+//        test();
+        testAdd();
+    }
+
+
+    public static void testAdd(){
+        Input input = new Input();
+//        BeanUtil.pojo.setIndexProperty(input,"test","fdasfadfasdf");
     }
 }

@@ -45,7 +45,7 @@ public class Producer {
                 Integer id = (Integer) o;
                 return list.get(id);
             }
-        },1);
+        },2);
 
         System.out.println("result : "  + sendResult);
         producer.shutdown();
