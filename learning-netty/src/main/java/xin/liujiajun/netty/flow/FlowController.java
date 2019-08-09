@@ -16,29 +16,29 @@ import io.netty.channel.socket.nio.NioSocketChannel;
  **/
 public class FlowController {
     public static void main(String[] args) {
-        for (int i = 0; i < 30; i++) {
-            NioEventLoopGroup group = new NioEventLoopGroup();
-            Bootstrap b = new Bootstrap();
-            b.group(group)
-                    .channel(NioSocketChannel.class)
-                    .handler(new ChannelInitializer<SocketChannel>() {
-                        @Override
-                        protected void initChannel(SocketChannel socketChannel) throws Exception {
-                            socketChannel.pipeline().addLast(new ClientHandler());
-                        }
-                    });
-            ChannelFuture future = b.connect("localhost", 9988);
-            future.addListener(new ChannelFutureListener() {
-                @Override
-                public void operationComplete(ChannelFuture channelFuture) throws Exception {
-                    if (!channelFuture.isSuccess()){
-                        System.out.println("not success");
+
+        NioEventLoopGroup group = new NioEventLoopGroup();
+        Bootstrap b = new Bootstrap();
+        b.group(group)
+                .channel(NioSocketChannel.class)
+                .handler(new ChannelInitializer<SocketChannel>() {
+                    @Override
+                    protected void initChannel(SocketChannel socketChannel) throws Exception {
+                        socketChannel.pipeline().addLast(new ClientHandler());
                     }
+                });
+        ChannelFuture future = b.connect("localhost", 9977);
+        future.addListener(new ChannelFutureListener() {
+            @Override
+            public void operationComplete(ChannelFuture channelFuture) throws Exception {
+                if (!channelFuture.isSuccess()) {
+                    System.out.println("not success");
                 }
-            });
-            future.awaitUninterruptibly();
-            boolean active = future.channel().isActive();
-            System.out.println("active :" + active);
-        }
+            }
+        });
+        future.awaitUninterruptibly();
+        boolean active = future.channel().isActive();
+        System.out.println("active :" + active);
+        
     }
 }
