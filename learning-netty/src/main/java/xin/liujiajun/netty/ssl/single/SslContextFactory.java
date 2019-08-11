@@ -4,12 +4,9 @@ import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 
 import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.security.*;
-import java.security.cert.CertificateException;
+import java.security.KeyStore;
 
 /**
  * @author liujiajun
@@ -23,7 +20,7 @@ public class SslContextFactory {
     public static SslContext getServer(){
         try {
             KeyStore jks = KeyStore.getInstance("JKS");
-            FileInputStream in = new FileInputStream("data/ssl/single/serverKeys.jks");
+            FileInputStream in = new FileInputStream("data/ssl/single/serverKey.jks");
             jks.load(in,PASSWORD.toCharArray());
             KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
             kmf.init(jks,PASSWORD.toCharArray());
@@ -37,7 +34,7 @@ public class SslContextFactory {
     public static SslContext getClient(){
         try{
             KeyStore jks = KeyStore.getInstance("JKS");
-            FileInputStream in = new FileInputStream("data/ssl/single/clientKeys.jks");
+            FileInputStream in = new FileInputStream("data/ssl/single/clientKey.jks");
             jks.load(in,PASSWORD.toCharArray());
             TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
             tmf.init(jks);

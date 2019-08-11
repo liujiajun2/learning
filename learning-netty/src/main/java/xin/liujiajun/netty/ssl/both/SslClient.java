@@ -31,11 +31,7 @@ public class SslClient {
                     @Override
                     protected void initChannel(SocketChannel ch) throws Exception {
                         SslContext clientContext = SslContextFactory.getClientContext();
-                        boolean client = clientContext.isClient();
-                        System.out.println("is client : {} " + client);
                         SSLEngine sslEngine = clientContext.newEngine(ch.pipeline().channel().alloc(),host,port);
-                        System.out.println(sslEngine.getPeerHost());
-                        System.out.println(sslEngine.getPeerPort());
                         sslEngine.setUseClientMode(true);
                         ch.pipeline().addLast("sslHandler",new SslHandler(sslEngine));
                         ch.pipeline().addLast(new SslClientHandler());

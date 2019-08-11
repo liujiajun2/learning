@@ -36,8 +36,6 @@ public class SslServer {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             SSLEngine sslEngine = SslContextFactory.getServerContext().newEngine(ch.pipeline().channel().alloc());
-                            //第一个条目就是对等方自己的证书
-//                            sslEngine.getSession().getPeerCertificates();
                             sslEngine.setUseClientMode(false);
                             sslEngine.setNeedClientAuth(true);
                             sslEngine.setEnabledCipherSuites(new String[]{"TLS_RSA_WITH_AES_128_CBC_SHA"});

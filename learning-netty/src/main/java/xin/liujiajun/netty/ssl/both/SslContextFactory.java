@@ -20,7 +20,7 @@ public class SslContextFactory {
     public static SslContext getServerContext() {
         try {
             KeyStore ks = KeyStore.getInstance("JKS");
-            FileInputStream input = new FileInputStream("data/ssl/both/serverKeys.jks");
+            FileInputStream input = new FileInputStream("data/ssl/both/serverKey.jks");
 
             ks.load(input, PASSWORD.toCharArray());
 
@@ -30,28 +30,23 @@ public class SslContextFactory {
 
             //truststore
             KeyStore ts = KeyStore.getInstance("JKS");
-            input = new FileInputStream("data/ssl/both/clientKeys.jks");
+            input = new FileInputStream("data/ssl/both/clientKey.jks");
             ts.load(input, PASSWORD.toCharArray());
 
             TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
             tmf.init(ts);
 
-
-            if (input != null) {
-                input.close();
-            }
+            input.close();
             return SslContextBuilder.forServer(kmf).trustManager(tmf).build();
 
         } catch (Exception e) {
             throw new Error("Failed to initialize the server SSLContext", e);
         }
-
     }
 
     public static SslContext getClientContext() {
         try {
-
-            FileInputStream input = new FileInputStream("data/ssl/both/clientKeys.jks");
+            FileInputStream input = new FileInputStream("data/ssl/both/clientKey.jks");
 
             // keystore
             KeyStore ks = KeyStore.getInstance("JKS");
@@ -64,7 +59,7 @@ public class SslContextFactory {
             // truststore
             KeyStore ts = KeyStore.getInstance("JKS");
 
-            input = new FileInputStream("data/ssl/both/serverKeys.jks");
+            input = new FileInputStream("data/ssl/both/serverKey.jks");
 
             ts.load(input, PASSWORD.toCharArray());
 
