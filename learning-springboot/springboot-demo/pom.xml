@@ -32,6 +32,7 @@
             <artifactId>spring-boot-starter-security</artifactId>
             <version>2.0.4.RELEASE</version>
         </dependency>
+
         <!--使用自动注入用于测试-->
         <dependency>
             <groupId>xin.liujiajun</groupId>

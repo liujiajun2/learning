@@ -20,7 +20,7 @@ public class Consumer {
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("hello");
         consumer.setNamesrvAddr("127.0.0.1:9876");
 
-        consumer.subscribe("topicTest","");
+        consumer.subscribe("hello","");
 
         consumer.registerMessageListener(new MessageListenerConcurrently() {
             @Override

@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import xin.liujiajun.springboot.autoconfig.model.Model;
 import xin.liujiajun.springboot.filter.MyFilter;
 
@@ -24,7 +25,9 @@ import javax.annotation.PostConstruct;
         "xin.liujiajun.springboot.model",
         "xin.liujiajun.springboot.service",
         "xin.liujiajun.springboot.event",
+        "xin.liujiajun.springboot.schedule",
 })
+@EnableScheduling
 public class BootApplication {
 
     @Autowired
