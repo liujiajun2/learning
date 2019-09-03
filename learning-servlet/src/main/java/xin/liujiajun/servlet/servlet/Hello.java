@@ -34,6 +34,7 @@ public class Hello extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("doGet");
+        //RequestDispatcher 路径参数必须以"/" 开始
         req.getRequestDispatcher("/view/hello.jsp").forward(req,resp);
     }
 
