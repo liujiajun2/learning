@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 public class AppChannleInializer extends ChannelInitializer {
 
     private static final EventExecutorGroup executor = new DefaultEventExecutorGroup(Runtime.getRuntime().availableProcessors() * 2);
-    private static final GlobalTrafficShapingHandler trafficHandler = new GlobalTrafficShapingHandler(executor,3000000,3000000);
+    private static final GlobalTrafficShapingHandler trafficHandler = new GlobalTrafficShapingHandler(executor,1024 *1024,1024 *1024);
 
     static {
 
