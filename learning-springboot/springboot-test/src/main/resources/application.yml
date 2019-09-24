@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: test
+  thymeleaf:
+    cache: false
+    check-template: false
+    check-template-location: false
+    mode: LEGACYHTML5
+server:
+  port: 9000

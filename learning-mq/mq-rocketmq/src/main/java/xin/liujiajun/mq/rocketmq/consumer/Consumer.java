@@ -17,15 +17,23 @@ public class Consumer {
 
 
     public static void main(String[] args) throws MQClientException {
-        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("hello");
+
+        consumer("hello");
+
+        consumer("hello2");
+    }
+
+    public static void consumer(String group) throws MQClientException {
+
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(group);
         consumer.setNamesrvAddr("127.0.0.1:9876");
 
-        consumer.subscribe("hello","");
+        consumer.subscribe("hello", "");
 
         consumer.registerMessageListener(new MessageListenerConcurrently() {
             @Override
             public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> list, ConsumeConcurrentlyContext consumeConcurrentlyContext) {
-                System.out.println(Thread.currentThread().getName() + " Receive new message" + list);
+                System.out.println("group " + group +" " + Thread.currentThread().getName() + " Receive new message" + list);
                 return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }
         });

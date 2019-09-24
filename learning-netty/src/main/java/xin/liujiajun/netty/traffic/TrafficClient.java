@@ -10,6 +10,13 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.DelimiterBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldPrepender;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
+import io.netty.handler.stream.ChunkedWriteHandler;
+import io.netty.handler.traffic.ChannelTrafficShapingHandler;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
@@ -44,34 +51,70 @@ public class TrafficClient {
     private static class ClientInitializer extends ChannelInitializer<SocketChannel>{
 
         @Override
-        protected void initChannel(SocketChannel socketChannel) throws Exception {
-            socketChannel.pipeline().addLast(new TrafficShapingClientHandler());
+        protected void initChannel(SocketChannel ch) throws Exception {
+
+//            ByteBuf delimiter = Unpooled.copiedBuffer("$_".getBytes());
+//            ch.pipeline().addLast(new DelimiterBasedFrameDecoder(10 *  1024 * 1024, delimiter));
+            ch.pipeline().addLast("LengthFieldBasedFrameDecoder", new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4, 0, 4, true));
+            ch.pipeline().addLast("LengthFieldPrepender", new LengthFieldPrepender(4, 0));
+
+            ch.pipeline().addLast(new StringEncoder());
+
+            ch.pipeline().addLast(new StringDecoder());
+
+            ch.pipeline().addLast(new TrafficShapingClientHandler());
         }
     }
 
     private static class TrafficShapingClientHandler extends ChannelInboundHandlerAdapter{
         private static AtomicInteger SEQ = new AtomicInteger(0);
-        static final byte [] ECHO_REQ = new byte[ 1024 * 1024 - 2];
+        static final byte [] ECHO_REQ = new byte[1024 * 1024];
         static final String DELIMITER = "$_";
+        static String str;
         static ScheduledExecutorService service = Executors.newScheduledThreadPool(1);
 
         @Override
         public void channelActive(ChannelHandlerContext ctx) throws Exception {
+            AtomicInteger index = new AtomicInteger(0);
             service.scheduleAtFixedRate(()->{
+                if (index.get() == 1) {
+                    return;
+                }
                 ByteBuf byteBuf = null;
                 for (int i = 0; i < 10; i++) {
-                    byteBuf = Unpooled.copiedBuffer(ECHO_REQ, DELIMITER.getBytes());
+                    byteBuf = Unpooled.copiedBuffer(ECHO_REQ);
                     SEQ.getAndAdd(byteBuf.readableBytes());
                     if (ctx.channel().isWritable()) {
-                        ctx.write(byteBuf);
+                        ctx.write(getStr());
                     }
                 }
                 ctx.flush();
                 int counter = SEQ.getAndSet(0);
+                index.incrementAndGet();
 
-                System.out.println("the client send rate is : " + counter+ "bytes/s");
+
+                System.out.println("the client send rate is : " + counter/ 1024 + "Kb/s");
 
             },0,10, TimeUnit.SECONDS);
         }
+
+        @Override
+        public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        }
+
+        public static String getStr(){
+
+            if (str!= null && !"".equalsIgnoreCase(str)) {
+                return str;
+            }
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i <  256 * 1024; i++) {
+                builder.append(i);
+            }
+            str = builder.toString();
+            return str;
+        }
     }
+
+
 }

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"/>
+    <title>首页</title>
+</head>
+<body>
+<div id="app">
+
+    <el-upload
+            class="upload-demo"
+            drag
+            action="/sentinel/log/upload"
+            :on-success="upload">
+        <i class="el-icon-upload"></i>
+        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+        <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+    </el-upload>
+
+    <p>拦截日志</p>
+    <template>
+        <el-table :data="blockTable" border style="width: 100%">
+            <el-table-column prop="time" label="时间"></el-table-column>
+            <el-table-column prop="sequence" label="序号"></el-table-column>
+            <el-table-column prop="resource" label="资源名"></el-table-column>
+            <el-table-column prop="limitKind" label="被限制的种类"></el-table-column>
+            <el-table-column prop="defaultLimit" label="default"></el-table-column>
+            <el-table-column prop="actualLimit" label="实际限制来源应用"></el-table-column>
+            <el-table-column prop="limit" label="限流发生次数/s"></el-table-column>
+        </el-table>
+    </template>
+    <p>秒级日志</p>
+    <template>
+        <el-table :data="metricsTable" border style="width: 100%">
+            <el-table-column prop="timestamp" label="时间戳"></el-table-column>
+            <el-table-column prop="time" label="时间"></el-table-column>
+            <el-table-column prop="resource" label="资源名"></el-table-column>
+            <el-table-column prop="passCount" label="passed QPS"></el-table-column>
+            <el-table-column prop="blockCount" label="blocked QPS"></el-table-column>
+            <el-table-column prop="completeCount" label="exit QPS"></el-table-column>
+            <el-table-column prop="exceptionCount" label="异常数量"></el-table-column>
+            <el-table-column prop="rt" label="平均响应时间"></el-table-column>
+        </el-table>
+    </template>
+</div>
+</body>
+
+<!-- 引入vue组件库 -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+<!-- 引入element-ui组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<!-- 引入axios组件库 -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            blockTable: [{
+                time: "",
+                sequence: 0,
+                resource: "",
+                limitKind: "",
+                defaultLimit: "",
+                actualLimit: "",
+                limit: 0
+            }],
+
+            metricsTable: [{
+                timestamp:0,
+                time:"",
+                resource:"",
+                passCount:0,
+                blockCount:0,
+                completeCount:0,
+                exceptionCount:0,
+                rt:0
+            }]
+
+        },
+        created: function () {
+
+        },
+        methods: {
+            upload:function (response, file, filList) {
+                let name = file.name;
+                if (name.indexOf("block") >= 0){
+                    app.blockTable = response;
+                }else if(name.indexOf("metrics") >= 0){
+                    app.metricsTable = response;
+                }
+            }
+        }
+    });
+
+</script>
+</html>
