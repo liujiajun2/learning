@@ -1,24 +1,21 @@
 package xin.liujiajun.netty.traffic;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-import io.netty.channel.*;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.traffic.ChannelTrafficShapingHandler;
+import io.netty.handler.traffic.GlobalChannelTrafficShapingHandler;
 import io.netty.handler.traffic.GlobalTrafficShapingHandler;
-import io.netty.handler.traffic.TrafficCounter;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.Executors;
@@ -63,13 +60,9 @@ public class TrafficServer {
         protected void initChannel(SocketChannel ch) throws Exception {
 
 //            //消息类型必须是Bytebuf 或者是ByteBufHolder
-            GlobalTrafficShapingHandler handler = new GlobalTrafficShapingHandler(ch.eventLoop(), 1000, 128, 1000L);
-//            ChannelTrafficShapingHandler handler = new ChannelTrafficShapingHandler(1000, 1000,1000L);
-//            TrafficCounter trafficCounter = handler.trafficCounter();
-//            ch.pipeline().addLast("channel traffic shaping", handler);
-
-//            ByteBuf delimiter = Unpooled.copiedBuffer("$_".getBytes());
-//            ch.pipeline().addLast(new DelimiterBasedFrameDecoder(10 * (int) M, delimiter));
+//            GlobalTrafficShapingHandler handler = new GlobalTrafficShapingHandler(ch.eventLoop(), 1000, 128, 1000L);
+            ChannelTrafficShapingHandler handler = new ChannelTrafficShapingHandler(1024 * 1024, 1024 * 1024,1000L);
+            ch.pipeline().addLast("channelTrafficShaping", handler);
 
             ch.pipeline().addLast("LengthFieldBasedFrameDecoder", new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4, 0, 4, true));
             ch.pipeline().addLast("LengthFieldPrepender", new LengthFieldPrepender(4, 0));
@@ -83,7 +76,6 @@ public class TrafficServer {
     }
 
     private static class TrafficShapingServerHandler extends SimpleChannelInboundHandler<String> {
-        TrafficCounter trafficCounter;
         AtomicInteger counter = new AtomicInteger(0);
         static ScheduledExecutorService service = Executors.newScheduledThreadPool(1);
 
@@ -93,30 +85,11 @@ public class TrafficServer {
             }, 0, 1, TimeUnit.SECONDS);
         }
 
-        public TrafficShapingServerHandler(TrafficCounter trafficCounter) {
-            this.trafficCounter = trafficCounter;
-            service.scheduleAtFixedRate(() -> {
-                System.out.println("The server receive client rate is : " + counter.getAndSet(0) / 1024 + "Kb/s");
-            }, 0, 1, TimeUnit.SECONDS);
-        }
-
-
         @Override
         protected void channelRead0(ChannelHandlerContext channelHandlerContext, String s) throws Exception {
             counter.addAndGet(s.getBytes().length);
             System.out.println("now " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n")));
 
-            System.out.println(trafficCounter);
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("data/text.txt",true));
-            bufferedWriter.write(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n")));
-            bufferedWriter.write("\r\n");
-            bufferedWriter.write(s);
-            bufferedWriter.write("\r\n");
-
-            bufferedWriter.close();
-//            System.out.println(s);
         }
-
-
     }
 }
