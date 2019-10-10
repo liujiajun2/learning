@@ -11,16 +11,14 @@ import java.util.List;
 
 /**
  * @author liujiajun
- * @create 2019-07-17 12:37
+ * @date 2019-10-08 10:02
  **/
-public class Consumer {
-
+public class Test {
 
     public static void main(String[] args) throws MQClientException {
 
         consumer("hello");
 
-//        consumer("hello2");
     }
 
     public static void consumer(String group) throws MQClientException {
