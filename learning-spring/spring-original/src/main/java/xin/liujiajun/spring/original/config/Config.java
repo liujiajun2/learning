@@ -1,11 +1,8 @@
-package xin.liujiajun.spring.config;
+package xin.liujiajun.spring.original.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Description;
-import xin.liujiajun.spring.bean.Animal;
-import xin.liujiajun.spring.bean.Cat;
-import xin.liujiajun.spring.bean.HelloBean;
+import xin.liujiajun.spring.original.bean.HelloBean;
 
 /**
  * @author LiuJiaJun

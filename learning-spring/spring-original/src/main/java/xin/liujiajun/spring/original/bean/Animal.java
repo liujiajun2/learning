@@ -1,4 +1,4 @@
-package xin.liujiajun.spring.bean;
+package xin.liujiajun.spring.original.bean;
 
 /**
  * @author LiuJiaJun

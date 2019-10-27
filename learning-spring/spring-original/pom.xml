@@ -3,31 +3,23 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
+        <artifactId>learning-spring</artifactId>
         <groupId>xin.liujiajun</groupId>
-        <artifactId>learning-starter</artifactId>
         <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>learning-spring</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>spring-original</module>
-        <module>springmvc-myself</module>
-    </modules>
+    <artifactId>spring-original</artifactId>
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
+            <version>5.0.9.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-        </dependency>
-        <!--guava-->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
+            <version>5.0.9.RELEASE</version>
         </dependency>
     </dependencies>
 

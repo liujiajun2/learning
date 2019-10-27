@@ -1,10 +1,9 @@
-package xin.liujiajun.spring.test;
+package xin.liujiajun.spring.original.test;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import xin.liujiajun.spring.bean.Animal;
-import xin.liujiajun.spring.bean.HelloBean;
-import xin.liujiajun.spring.eventbus.EventBusFacade;
+import xin.liujiajun.spring.original.bean.Animal;
+import xin.liujiajun.spring.original.bean.HelloBean;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -19,25 +18,19 @@ public class BeanTest {
 
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
-        HelloBean hello = (HelloBean)context.getBean("hello");
+        HelloBean hello = (HelloBean) context.getBean("hello");
         Object o = context.getBean("hello");
         Map<String, Animal> beans = context.getBeansOfType(Animal.class);
         Set<String> strings = beans.keySet();
         Iterator<String> iterator = strings.iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             System.out.println(iterator.next());
         }
 
         System.out.println(o);
         hello.say();
 
-        testEventBus();
 
         ((ClassPathXmlApplicationContext) context).refresh();
-    }
-
-    public static void testEventBus(){
-        EventBusFacade.execute(new TestEvent().setId("tttt"));
-        EventBusFacade.execute(new TestPostEvent().setName("TestPostEvent"));
     }
 }

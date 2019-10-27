@@ -24,6 +24,7 @@
         <module>learning-mq</module>
         <module>learning-sentinel</module>
         <module>learning-es</module>
+        <module>learning-groovy</module>
         <module>learning-demo</module>
         <module>learning-redis</module>
         <module>learning-vertx</module>
@@ -31,6 +32,9 @@
         <module>learning-websocket</module>
     </modules>
     <packaging>pom</packaging>
+    <properties>
+        <groovy-version>2.4.5</groovy-version>
+    </properties>
     <!--阿里远程仓库-->
     <repositories>
         <repository>
