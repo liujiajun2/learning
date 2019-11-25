@@ -4,6 +4,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import xin.liujiajun.spring.bean.Animal;
 import xin.liujiajun.spring.bean.HelloBean;
+import xin.liujiajun.spring.eventbus.EventBusFacade;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -30,7 +31,13 @@ public class BeanTest {
         System.out.println(o);
         hello.say();
 
+        testEventBus();
 
         ((ClassPathXmlApplicationContext) context).refresh();
+    }
+
+    public static void testEventBus(){
+        EventBusFacade.execute(new TestEvent().setId("tttt"));
+        EventBusFacade.execute(new TestPostEvent().setName("TestPostEvent"));
     }
 }
