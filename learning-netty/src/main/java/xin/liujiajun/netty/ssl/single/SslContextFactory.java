@@ -15,7 +15,6 @@ import java.security.KeyStore;
 public class SslContextFactory {
     private static final String PROTOCOL = "TLS";
     private static final String PASSWORD = "123456";
-//    private static final String PASSWORD = "yealink1105";
 
     public static SslContext getServer(){
         try {
