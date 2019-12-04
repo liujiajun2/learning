@@ -13,13 +13,12 @@ public class Demo {
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
-        try {
-            TimeUnit.SECONDS.sleep(10);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-//        InetAddress.getLocalHost();
-        System.out.println("begin========================");
+//        try {
+//            TimeUnit.SECONDS.sleep(10);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println("begin========================");
         int pid = getPid();
         System.out.println("pid : " + pid);
         System.out.println("cost time " + (System.currentTimeMillis() - start) + "ms");
