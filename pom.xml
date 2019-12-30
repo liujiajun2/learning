@@ -25,6 +25,7 @@
         <module>learning-sentinel</module>
         <module>learning-es</module>
         <module>learning-demo</module>
+        <module>learning-redis</module>
     </modules>
     <packaging>pom</packaging>
     <!--阿里远程仓库-->

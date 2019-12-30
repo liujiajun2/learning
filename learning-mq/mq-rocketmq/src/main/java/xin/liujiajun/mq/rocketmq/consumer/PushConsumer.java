@@ -13,7 +13,7 @@ import java.util.List;
  * @author liujiajun
  * @create 2019-07-17 12:37
  **/
-public class Consumer {
+public class PushConsumer {
 
 
     public static void main(String[] args) throws MQClientException {

@@ -6,6 +6,7 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.FixedLengthFrameDecoder;
 
 /**
  * @author liujiajun
@@ -27,6 +28,7 @@ public class Server {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             //EchoServerHandler 被标注为@Shareable,所以我们可以总是使用同样的实例
+                            socketChannel.pipeline().addLast(new FixedLengthFrameDecoder(4));
                             socketChannel.pipeline().addLast(handler);
                         }
                     });

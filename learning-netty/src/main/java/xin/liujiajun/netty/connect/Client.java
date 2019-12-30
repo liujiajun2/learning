@@ -40,7 +40,7 @@ public class Client {
         long strt = System.currentTimeMillis();
         Bootstrap b = new Client().start();
         ArrayList<Channel> channels = new ArrayList<>();
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 2; i++) {
             channels.add(b.connect().sync().channel());
         }
         System.out.println(channels.size());
