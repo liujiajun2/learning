@@ -38,13 +38,23 @@ public class RedisConnection implements InitializingBean, DisposableBean {
     }
 
     protected void initJedisPool(){
-        jedisPool = new JedisPool(getJedisPoolConfig(),
-                this.redisProperties.getHost(),
-                this.redisProperties.getPort(),
-                this.redisProperties.getTimeout()
-//                this.redisProperties.getPassword(),
-//                this.redisProperties.getDatabase()
-        );
+
+        if (this.redisProperties.getPassword() == null || "".equals(this.redisProperties.getPassword())) {
+            jedisPool = new JedisPool(getJedisPoolConfig(),
+                    this.redisProperties.getHost(),
+                    this.redisProperties.getPort(),
+                    this.redisProperties.getTimeout()
+            );
+        }else{
+            jedisPool = new JedisPool(getJedisPoolConfig(),
+                    this.redisProperties.getHost(),
+                    this.redisProperties.getPort(),
+                    this.redisProperties.getTimeout(),
+                this.redisProperties.getPassword(),
+                this.redisProperties.getDatabase()
+            );
+        }
+
     }
 
     protected JedisPoolConfig getJedisPoolConfig(){

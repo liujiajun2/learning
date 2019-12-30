@@ -4,3 +4,8 @@ spring:
     port: 6379
     password:
     timeout: 3000
+    pubsub:
+      host: 120.77.85.125
+      port: 6379
+      password:
+      timeout: 3000

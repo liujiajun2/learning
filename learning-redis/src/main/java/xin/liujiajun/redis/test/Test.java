@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct;
 @Component
 public class Test {
     @Autowired
-    TestCache testCache;
+    private TestCache testCache;
 
     @PostConstruct
     public void init(){
