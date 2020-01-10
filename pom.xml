@@ -27,6 +27,7 @@
         <module>learning-demo</module>
         <module>learning-redis</module>
         <module>learning-vertx</module>
+        <module>learning-metrics</module>
     </modules>
     <packaging>pom</packaging>
     <!--阿里远程仓库-->
@@ -47,6 +48,7 @@
         <junit.verxion>4.10</junit.verxion>
         <vertx.version>3.6.0</vertx.version>
         <spring.version>5.0.9.RELEASE</spring.version>
+        <spring.boot.version>2.0.4.RELEASE</spring.boot.version>
         <guava.version>27.1-jre</guava.version>
         <es.hight.version>7.2.0</es.hight.version>
         <mybatis.version>3.4.6</mybatis.version>
@@ -58,6 +60,7 @@
         <quartz.version>2.3.0</quartz.version>
         <jedis.version>2.9.0</jedis.version>
         <hutool.version>5.1.0</hutool.version>
+        <metrics.version>3.1.2</metrics.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -80,6 +83,11 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>
                 <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring.boot.version}</version>
             </dependency>
             <!--guava-->
             <dependency>
@@ -147,6 +155,11 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.dropwizard.metrics</groupId>
+                <artifactId>metrics-core</artifactId>
+                <version>${metrics.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

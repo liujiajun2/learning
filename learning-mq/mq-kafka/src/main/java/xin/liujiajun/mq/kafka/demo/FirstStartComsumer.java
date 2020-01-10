@@ -1,9 +1,7 @@
 package xin.liujiajun.mq.kafka.demo;
 
-import org.apache.kafka.clients.consumer.CommitFailedException;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.clients.consumer.*;
+import xin.liujiajun.mq.kafka.consumer.MyConsumerInterceptor;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -22,6 +20,9 @@ public class FirstStartComsumer {
         properties.put("group.id","country");
         properties.put("key.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
         properties.put("value.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
+
+        //自定义消费拦截器
+        properties.put(ConsumerConfig.INTERCEPTOR_CLASSES_CONFIG, MyConsumerInterceptor.class.getName());
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties);
 
