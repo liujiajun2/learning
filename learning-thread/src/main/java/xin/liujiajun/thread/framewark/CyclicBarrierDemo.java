@@ -1,8 +1,7 @@
 package xin.liujiajun.thread.framewark;
 
 import java.util.Random;
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.*;
 
 /**
  * CyclicBarrier 是一种并发控制使用工具，可以实现线程间的计数等待。
@@ -61,16 +60,34 @@ public class CyclicBarrierDemo {
     }
 
     public static void main(String[] args) throws Exception {
-        final int n = 10;
-        Thread[] threads = new Thread[n];
-        boolean flag = false;
-        CyclicBarrier cyclicBarrier = new CyclicBarrier(n, new BarrierRun(flag, n));
-        System.out.println("集合队伍");
+//        final int n = 10;
+//        Thread[] threads = new Thread[n];
+//        boolean flag = false;
+//        CyclicBarrier cyclicBarrier = new CyclicBarrier(n, new BarrierRun(flag, n));
+//        System.out.println("集合队伍");
+//
+//        for (int i = 0; i < n; i++) {
+//            System.out.println("士兵" + i+ "报到");
+//            threads[i] = new Thread(new Soldier(cyclicBarrier,"士兵" + i));
+//            threads[i].start();
+//        }
 
-        for (int i = 0; i < n; i++) {
-            System.out.println("士兵" + i+ "报到");
-            threads[i] = new Thread(new Soldier(cyclicBarrier,"士兵" + i));
-            threads[i].start();
+        CyclicBarrier barrier = new CyclicBarrier(5, () -> {
+            System.out.println(Thread.currentThread().getName() + " : all completed!!!");
+        });
+        ExecutorService service = Executors.newCachedThreadPool();
+        for (int i = 0; i < 5; i++) {
+            service.submit(()->{
+                try {
+                    TimeUnit.MILLISECONDS.sleep(new Random().nextInt(3000));
+                    System.out.println(Thread.currentThread().getName() + " : complete");
+                    barrier.await();
+                }catch (Exception ignore) {
+
+                }
+            });
         }
+
+
     }
 }

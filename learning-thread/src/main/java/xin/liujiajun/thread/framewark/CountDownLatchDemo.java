@@ -12,27 +12,26 @@ import java.util.concurrent.Executors;
  * @author LiuJiaJun
  * @date 2019/1/11 22:04
  */
-public class CountDownLatchDemo implements Runnable {
-    static final CountDownLatch end = new CountDownLatch(10);
-    static final CountDownLatchDemo demo = new CountDownLatchDemo();
+public class CountDownLatchDemo {
 
-    public void run() {
-        try {
-            Thread.sleep(new Random().nextInt(10) * 1000);
-            System.out.println("check complete");
-            end.countDown();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+    static final CountDownLatch counter = new CountDownLatch(10);
+
 
     public static void main(String[] args) throws Exception{
         ExecutorService exec = Executors.newFixedThreadPool(10);
         for (int i = 0; i < 10; i++) {
-            exec.submit(demo);
+            exec.submit(()->{
+                try {
+                    Thread.sleep(new Random().nextInt(10) * 1000);
+                    System.out.println(Thread.currentThread().getName() + " :single complete");
+                    counter.countDown();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
         }
-        end.await();
-        System.out.println("fire!");
+        counter.await();
+        System.out.println(Thread.currentThread().getName() +" :all complete!");
         exec.shutdown();
 
     }

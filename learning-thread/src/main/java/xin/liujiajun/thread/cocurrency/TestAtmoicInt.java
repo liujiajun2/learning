@@ -3,6 +3,7 @@ package xin.liujiajun.thread.cocurrency;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -18,7 +19,6 @@ public class TestAtmoicInt {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
 
         TestAtmoicInt testAtmoicInt = new TestAtmoicInt();
-
         for (int i = 0; i < 10000; i++) {
             if (i % 100 == 0) {
                 testAtmoicInt.dec();
