@@ -28,6 +28,7 @@
         <module>learning-redis</module>
         <module>learning-vertx</module>
         <module>learning-metrics</module>
+        <module>learning-websocket</module>
     </modules>
     <packaging>pom</packaging>
     <!--阿里远程仓库-->
