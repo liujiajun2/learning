@@ -19,6 +19,7 @@ public class CountTask extends RecursiveTask<Long> {
     public CountTask(long start, long end) {
         this.start = start;
         this.end = end;
+        new String()
     }
 
     @Override

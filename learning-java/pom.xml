@@ -83,6 +83,13 @@
             <version>${logback.version}</version>
         </dependency>
 
+        <!--用于计算堆内存占用大小工具-->
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-core</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+
     </dependencies>
 
 </project>

@@ -27,11 +27,12 @@ public class EchoServer {
     public void start() throws InterruptedException {
         EchoServerHandler handler = new EchoServerHandler();
         //创建EventLoopGroup
-        NioEventLoopGroup group = new NioEventLoopGroup();
+        NioEventLoopGroup boss = new NioEventLoopGroup();
+        NioEventLoopGroup work = new NioEventLoopGroup();
 
         try {
             ServerBootstrap b = new ServerBootstrap();
-            b.group(group)
+            b.group(boss,work)
                     //指定所使用的NIO 传输channel
                     .channel(NioServerSocketChannel.class)
                     .localAddress(port)
@@ -48,7 +49,8 @@ public class EchoServer {
             f.channel().closeFuture().sync();
         }finally {
             //释放所有资源
-            group.shutdownGracefully().sync();
+            boss.shutdownGracefully().sync();
+            work.shutdownGracefully().sync();
         }
     }
 }

@@ -14,10 +14,9 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ReentrantLockDemo {
     private Lock lock = new ReentrantLock();
     public Condition condition = lock.newCondition();
-
     public void await(){
+        lock.lock();
         try {
-            lock.lock();
             System.out.println("await: " + DateTimeUtil.now());
             condition.await();
         } catch (InterruptedException e) {
