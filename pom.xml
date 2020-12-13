@@ -30,11 +30,9 @@
         <module>learning-vertx</module>
         <module>learning-metrics</module>
         <module>learning-websocket</module>
+        <module>learning-http</module>
     </modules>
     <packaging>pom</packaging>
-    <properties>
-        <groovy-version>2.4.5</groovy-version>
-    </properties>
     <!--阿里远程仓库-->
     <repositories>
         <repository>
@@ -66,6 +64,7 @@
         <jedis.version>2.9.0</jedis.version>
         <hutool.version>5.1.0</hutool.version>
         <metrics.version>3.1.2</metrics.version>
+        <groovy-version>2.4.5</groovy-version>
     </properties>
     <dependencyManagement>
         <dependencies>

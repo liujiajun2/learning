@@ -11,7 +11,8 @@ import io.netty.util.CharsetUtil;
  * @date 2019-08-08 14:07
  **/
 @ChannelHandler.Sharable
-public class SslClientHandler extends SimpleChannelInboundHandler {
+public class
+SslClientHandler extends SimpleChannelInboundHandler {
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, Object o) throws Exception {
         System.out.println("client read");

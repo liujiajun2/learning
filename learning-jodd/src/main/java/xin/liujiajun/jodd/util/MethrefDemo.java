@@ -1,5 +1,7 @@
 package xin.liujiajun.jodd.util;
 
+import jodd.util.StringUtil;
+
 /**
  * @author liujiajun
  * @description

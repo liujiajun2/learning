@@ -55,8 +55,13 @@ public class SslServer {
                                 }
                             });
                             ch.pipeline().addLast("ssl",sslHandler);
+
+                            ch.pipeline().addLast(new OrderHandler());
+
                             //EchoServerHandler 被标注为@Shareable,所以我们可以总是使用同样的实例
                             ch.pipeline().addLast(handler);
+
+
                         }
                     });
             //异步绑定服务器，调用sync方法阻塞等待直到绑定完成
