@@ -52,7 +52,7 @@
         <vertx.version>3.6.0</vertx.version>
         <spring.version>5.0.9.RELEASE</spring.version>
         <spring.boot.version>2.0.4.RELEASE</spring.boot.version>
-        <guava.version>27.1-jre</guava.version>
+        <guava.version>29.0-jre</guava.version>
         <es.hight.version>7.2.0</es.hight.version>
         <mybatis.version>3.4.6</mybatis.version>
         <mysql.version>5.1.38</mysql.version>
