@@ -55,7 +55,7 @@
         <guava.version>27.1-jre</guava.version>
         <es.hight.version>7.2.0</es.hight.version>
         <mybatis.version>3.4.6</mybatis.version>
-        <mysql.version>5.1.38</mysql.version>
+        <mysql.version>8.0.28</mysql.version>
         <slf4j.version>1.7.12</slf4j.version>
         <log4j.version>1.2.17</log4j.version>
         <netty.version>4.1.32.Final</netty.version>
